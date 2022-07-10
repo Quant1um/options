@@ -1,9 +1,10 @@
-import { Container, DeadFace } from "./styles"
+import Container from "components/CVContainer"
+import DeadFace from "components/DeadFace"
 
 export const NotFound = () => {
     return (
         <Container>
-            <DeadFace>(+_x)</DeadFace>
+            <DeadFace />
             <h2>404 Not Found</h2>
         </Container>
     )

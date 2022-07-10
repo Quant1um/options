@@ -7,7 +7,7 @@ export const Example = lazy(() =>
 )
 
 export const NotFound = lazy(() =>
-    import("src/pages/NotFound/NotFound").then(module => ({
+    import("src/pages/NotFound").then(module => ({
         default: module.NotFound,
     })),
 )

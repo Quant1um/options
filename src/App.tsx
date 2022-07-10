@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom"
-import { Routes } from "./routes/Routes"
-import ErrorBoundary from "./routes/components/ErrorBoundary"
+import { Routes } from "routes/Routes"
+import ErrorBoundary from "components/ErrorBoundary"
 
 export const App = () => {
     return (
