@@ -1,11 +1,9 @@
-import { TextExample } from 'src/components/TextExample/TextExample'
-
-import { Container } from './styles'
+import { Container } from "./styles"
 
 export const Example = () => {
-  return (
-    <Container>
-      <TextExample>Example</TextExample>
-    </Container>
-  )
+    return (
+        <Container>
+            <h1>Example</h1>
+        </Container>
+    )
 }
