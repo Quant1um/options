@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -17,9 +18,13 @@
             -webkit-font-smoothing: antialiased;
 
             font-family: 'Montserrat', sans-serif;
-            font-weight: 100;
+            font-weight: 400;
 
             background: #1f1f1f;
+            color: #fefefe;
+        }
+
+        a {
             color: #fefefe;
         }
 
@@ -34,7 +39,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            outline: 0; 
+            outline: 0;
         }
 
         .lds-dual-ring {
@@ -53,7 +58,7 @@
             border: 6px solid #fff;
             border-color: #fff transparent #fff transparent;
             animation: lds-dual-ring 1.2s linear infinite;
-        }   
+        }
 
         @keyframes lds-dual-ring {
             0% {
@@ -66,11 +71,17 @@
         }
     </style>
 
-  </head>
-  <body>
-    <noscript class="meta"><h1>You need to enable JavaScript to run this app.</h1></noscript>
-    <div id="root"><div class="meta lds-dual-ring"></div></div>
+</head>
+
+<body>
+    <noscript class="meta">
+        <h1>You need to enable JavaScript to run this app.</h1>
+    </noscript>
+    <div id="root">
+        <div class="meta lds-dual-ring"></div>
+    </div>
     <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-  </body>
+</body>
+
 </html>

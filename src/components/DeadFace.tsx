@@ -7,5 +7,5 @@ const Style = styled.h1`
 `
 
 export default () => {
-    return <Style>(+_x)</Style>
+    return <Style>(+_&times;)</Style>
 }

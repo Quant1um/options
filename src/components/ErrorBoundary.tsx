@@ -17,7 +17,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     }
 
     static getDerivedStateFromError(error: any) {
-        console.log(error)
+        console.log("derived", error)
         return { error }
     }
 
@@ -29,8 +29,8 @@ export default class ErrorBoundary extends Component<Props, State> {
             return (
                 <CVContainer>
                     <DeadFace />
-                    <h2>An Error has occurred</h2>
-                    <h6>{error}</h6>
+                    <h2>An error has occurred</h2>
+                    <h3>Please report <a href="">here</a></h3>
                 </CVContainer>
             )
         }
