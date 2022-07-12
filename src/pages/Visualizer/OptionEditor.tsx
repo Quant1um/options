@@ -38,7 +38,12 @@ export default ({ option, onChange, onDelete }: Props) => {
             <NumberInput
                 label="Quantity"
                 min={1}
+                step={0.01}
+                stepHoldDelay={500}
+                stepHoldInterval={10}
+                precision={2}
                 value={Math.abs(option.qty)}
+                noClampOnBlur
                 onChange={(qty: number) => onChange({ ...option, qty: Math.sign(option.qty) * qty })}
             />
 
@@ -48,21 +53,36 @@ export default ({ option, onChange, onDelete }: Props) => {
                     <NumberInput
                         label="Days until Expiration"
                         min={0}
+                        step={0.01}
+                        stepHoldDelay={500}
+                        stepHoldInterval={10}
+                        precision={2}
                         value={option.maturity}
+                        noClampOnBlur
                         onChange={(maturity: number) => onChange({ ...option, maturity })}
                     />
 
                     <NumberInput
                         label="Strike Price"
                         min={0}
+                        step={0.01}
+                        stepHoldDelay={500}
+                        stepHoldInterval={10}
+                        precision={2}
                         value={option.strike}
+                        noClampOnBlur
                         onChange={(strike: number) => onChange({ ...option, strike })}
                     />
 
                     <NumberInput
                         label="Price per Share"
                         min={0}
+                        step={0.01}
+                        stepHoldDelay={500}
+                        stepHoldInterval={10}
+                        precision={2}
                         value={option.price}
+                        noClampOnBlur
                         onChange={(price: number) => onChange({ ...option, price })}
                     />
                 </>
