@@ -7,13 +7,13 @@ interface Props {
 }
 
 export default ({ option }: Props) => {
-    const long = option.qty >= 0
+    const short = option.short ? "Short" : "Long"
     const qty = Math.abs(option.qty)
     const type = option.type
 
     const info = type !== "Stock" ?
         <div>
-            <Text>{long ? "Long" : "Short"} {type} at <b>{option.strike}$</b> <b>(x{qty})</b></Text>
+            <Text>{short} {type} at <b>{option.strike}$</b> <b>(x{qty})</b></Text>
 
             <Text size="sm" color="dimmed" weight={400}>
                 <b>{option.maturity}</b> DTE w/ price of <b>{option.price}$</b>
@@ -21,7 +21,11 @@ export default ({ option }: Props) => {
         </div>
         :
         <div>
-            <Text>{long ? "Long" : "Short"} Stock <b>(x{qty})</b></Text>
+            <Text>{short} Stock <b>(x{qty})</b></Text>
+
+            <Text size="sm" color="dimmed" weight={400}>
+                Entered at <b>{option.strike}$</b>
+            </Text>
         </div>
 
     return (

@@ -15,8 +15,8 @@ export default ({ option, onChange, onDelete }: Props) => {
                 <Group noWrap>
                     <SegmentedControl
                         data={["↗", "↘"]}
-                        value={option.qty > 0 ? "↗" : "↘"}
-                        onChange={(type: "↗" | "↘") => onChange({ ...option, qty: (type === "↗" ? 1 : -1) * Math.abs(option.qty) })}
+                        value={option.short ? "↘" : "↗"}
+                        onChange={(type: "↘" | "↗") => onChange({ ...option, short: type === "↘" })}
                     />
 
                     <SegmentedControl
@@ -37,14 +37,26 @@ export default ({ option, onChange, onDelete }: Props) => {
 
             <NumberInput
                 label="Quantity"
-                min={1}
+                min={0.01}
                 step={0.01}
                 stepHoldDelay={500}
                 stepHoldInterval={10}
                 precision={2}
-                value={Math.abs(option.qty)}
+                value={option.qty}
                 noClampOnBlur
-                onChange={(qty: number) => onChange({ ...option, qty: Math.sign(option.qty) * qty })}
+                onChange={(qty: number) => onChange({ ...option, qty })}
+            />
+
+            <NumberInput
+                label={option.type === "Stock" ? "Enter Price" : "Strike Price"}
+                min={0.01}
+                step={0.01}
+                stepHoldDelay={500}
+                stepHoldInterval={10}
+                precision={2}
+                value={option.strike}
+                noClampOnBlur
+                onChange={(strike: number) => onChange({ ...option, strike })}
             />
 
             {
@@ -63,20 +75,8 @@ export default ({ option, onChange, onDelete }: Props) => {
                     />
 
                     <NumberInput
-                        label="Strike Price"
-                        min={0}
-                        step={0.01}
-                        stepHoldDelay={500}
-                        stepHoldInterval={10}
-                        precision={2}
-                        value={option.strike}
-                        noClampOnBlur
-                        onChange={(strike: number) => onChange({ ...option, strike })}
-                    />
-
-                    <NumberInput
-                        label="Price per Share"
-                        min={0}
+                        label="Price per Option Unit"
+                        min={0.01}
                         step={0.01}
                         stepHoldDelay={500}
                         stepHoldInterval={10}

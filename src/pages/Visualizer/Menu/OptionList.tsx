@@ -20,6 +20,7 @@ export default ({ options, onChange }: Props) => {
             strike: 100,
             price: 50,
             maturity: 90,
+            short: false,
             qty: 100,
         })
         onChange(list)

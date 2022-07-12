@@ -16,7 +16,7 @@ export const Container = ({ onLoad, options }: Props) => {
                 <Empty onLoad={onLoad} options={options} />
             </Accordion.Item>
 
-            <Accordion.Item key="import" label={<Card name={"Import/Export"} icon={""} description={"Import combo from short code"} />}>
+            <Accordion.Item key="import" label={<Card name={"Import/Export"} icon={""} description={"Import/export combo from/as a short code"} />}>
                 <ImportExport onLoad={onLoad} options={options} />
             </Accordion.Item>
         </Accordion>

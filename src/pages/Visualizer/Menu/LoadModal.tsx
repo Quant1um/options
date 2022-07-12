@@ -1,6 +1,6 @@
 import { Option } from "calc/option"
-import { Divider, Modal } from "@mantine/core";
-import { Container } from "./Presets/Preset";
+import { Divider, Modal } from "@mantine/core"
+import { Container } from "./Presets/Preset"
 
 interface Props {
     opened: boolean,

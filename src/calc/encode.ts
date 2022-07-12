@@ -1,4 +1,3 @@
-import { BitStream } from "bit-buffer"
 import { Option } from "./option"
 import { base64ToBigint, bigintToBase64 } from "bigint-conversion"
 
@@ -9,7 +8,6 @@ class Decoder {
         this.data = base64ToBigint(code);
     }
 
-    // its actually ok because no option can be encoded as zeros only (quantity must be nonzero)
     zero(): boolean {
         return this.data === BigInt(0)
     }
@@ -22,7 +20,7 @@ class Decoder {
         return Number(mod)
     }
 
-    readUFloat(): number {
+    readFloat(): number {
         const n = this.read(8);
         const m = this.read(3);
 
@@ -36,16 +34,6 @@ class Decoder {
 
         return res
     }
-
-    readSFloat(): number {
-        const sign = this.read(2)
-
-        if (sign === 0) {
-            return this.readUFloat()
-        } else {
-            return -this.readUFloat()
-        }
-    }
 }
 
 class Encoder {
@@ -53,6 +41,10 @@ class Encoder {
 
     constructor() {
         this.data = BigInt(0)
+    }
+
+    zero(): boolean {
+        return this.data === BigInt(0)
     }
 
     code(): string {
@@ -68,7 +60,7 @@ class Encoder {
         this.data += BigInt(value)
     }
 
-    writeUFloat(value: number) {
+    writeFloat(value: number) {
         const str = Math.abs(value).toFixed(2).replace(/\.0+$/, "")
         const idx = str.indexOf(".")
 
@@ -86,38 +78,43 @@ class Encoder {
         this.write(post.length, 3)
         this.write(pre.length, 8)
     }
-
-    writeSFloat(value: number) {
-        this.writeUFloat(Math.abs(value))
-        this.write(value > 0 ? 0 : 1, 2)
-    }
 }
 
 export const encode = (options: Option[]): string | null => {
     try {
         const encoder = new Encoder();
 
+        encoder.write(3, 4);
+
         for (const option of options) {
             switch (option.type) {
                 case "Stock":
-                    encoder.writeSFloat(option.qty);
-                    encoder.write(0, 3);
+                    encoder.writeFloat(option.strike);
+                    encoder.writeFloat(option.qty);
+                    encoder.write(option.short ? 1 : 0, 2);
+                    encoder.write(0, 4);
                     break;
                 case "Call":
-                    encoder.writeUFloat(option.price);
-                    encoder.writeUFloat(option.strike);
-                    encoder.writeUFloat(option.maturity);
-                    encoder.writeSFloat(option.qty);
-                    encoder.write(1, 3);
+                    encoder.writeFloat(option.price);
+                    encoder.writeFloat(option.strike);
+                    encoder.writeFloat(option.maturity);
+                    encoder.writeFloat(option.qty);
+                    encoder.write(option.short ? 1 : 0, 2);
+                    encoder.write(1, 4);
                     break;
                 case "Put":
-                    encoder.writeUFloat(option.price);
-                    encoder.writeUFloat(option.strike);
-                    encoder.writeUFloat(option.maturity);
-                    encoder.writeSFloat(option.qty);
-                    encoder.write(2, 3);
+                    encoder.writeFloat(option.price);
+                    encoder.writeFloat(option.strike);
+                    encoder.writeFloat(option.maturity);
+                    encoder.writeFloat(option.qty);
+                    encoder.write(option.short ? 1 : 0, 2);
+                    encoder.write(2, 4);
                     break;
             }
+        }
+
+        if (encoder.zero()) {
+            return "";
         }
 
         return encoder.code();
@@ -131,36 +128,54 @@ export const decode = (code: string): Option[] | null => {
     try {
         const decoder = new Decoder(code);
         const result = [] as Option[]
+        let run = true;
 
-        while (!decoder.zero()) {
+        while (run) {
             let qty;
+            let short;
             let maturity;
             let strike;
             let price;
 
-            switch (decoder.read(3)) {
-                case 0:
-                    qty = decoder.readSFloat();
+            if (decoder.zero()) {
+                return null;
+            }
 
-                    result.push({ type: "Stock", qty, price: 1, strike: 1, maturity: 1 } as unknown as Option); //asdasd
+            switch (decoder.read(4)) {
+                case 0:
+                    short = decoder.read(2) === 1;
+                    qty = decoder.readFloat();
+                    strike = decoder.readFloat();
+
+                    result.push({ type: "Stock", qty, short, strike, price: 100, maturity: 90 } as unknown as Option); //asdasd
                     break;
 
                 case 1:
-                    qty = decoder.readSFloat();
-                    maturity = decoder.readUFloat();
-                    strike = decoder.readUFloat();
-                    price = decoder.readUFloat();
+                    short = decoder.read(2) === 1;
+                    qty = decoder.readFloat();
+                    maturity = decoder.readFloat();
+                    strike = decoder.readFloat();
+                    price = decoder.readFloat();
 
-                    result.push({ type: "Call", qty, price, strike, maturity });
+                    result.push({ type: "Call", qty, short, price, strike, maturity });
                     break;
 
                 case 2:
-                    qty = decoder.readSFloat();
-                    maturity = decoder.readUFloat();
-                    strike = decoder.readUFloat();
-                    price = decoder.readUFloat();
+                    short = decoder.read(2) === 1;
+                    qty = decoder.readFloat();
+                    maturity = decoder.readFloat();
+                    strike = decoder.readFloat();
+                    price = decoder.readFloat();
 
-                    result.push({ type: "Put", qty, price, strike, maturity })
+                    result.push({ type: "Put", qty, short, price, strike, maturity })
+                    break;
+
+                case 3:
+                    if (!decoder.zero()) {
+                        return null
+                    }
+
+                    run = false;
                     break;
             }
         }
