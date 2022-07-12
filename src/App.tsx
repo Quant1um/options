@@ -1,13 +1,17 @@
 import { BrowserRouter } from "react-router-dom"
 import { Routes } from "routes/Routes"
+import { MantineProvider } from "@mantine/core"
 import ErrorBoundary from "components/ErrorBoundary"
+import theme from "./theme"
 
 export const App = () => {
     return (
         <BrowserRouter>
-            <ErrorBoundary>
-                <Routes />
-            </ErrorBoundary>
+            <MantineProvider theme={theme}>
+                <ErrorBoundary>
+                    <Routes />
+                </ErrorBoundary>
+            </MantineProvider>
         </BrowserRouter>
     )
 }

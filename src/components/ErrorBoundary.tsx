@@ -1,5 +1,5 @@
 import { Component, ReactNode } from "react"
-import CVContainer from "./CVContainer"
+import Box from "./Box"
 import DeadFace from "./DeadFace"
 
 interface Props {
@@ -27,11 +27,11 @@ export default class ErrorBoundary extends Component<Props, State> {
 
         if (typeof error !== "undefined") {
             return (
-                <CVContainer>
+                <Box fill column center>
                     <DeadFace />
                     <h2>An error has occurred</h2>
-                    <h3>Please report <a href="">here</a></h3>
-                </CVContainer>
+                    <span>Please report <a href="">here</a></span>
+                </Box>
             )
         }
 

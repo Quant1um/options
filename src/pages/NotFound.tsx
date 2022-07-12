@@ -1,11 +1,11 @@
-import Container from "components/CVContainer"
+import Box from "components/Box"
 import DeadFace from "components/DeadFace"
 
-export const NotFound = () => {
+export default () => {
     return (
-        <Container>
+        <Box center fill column>
             <DeadFace />
             <h2>404 Not Found</h2>
-        </Container>
+        </Box>
     )
 }
