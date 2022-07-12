@@ -13,7 +13,7 @@ export default ({ options, onChangeOptions }: Props) => {
         <Paper radius="md" style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
             <Group m="md" position="apart">
                 <Title order={4}>Option Visualizer</Title>
-                <GeneralMenu onOptionsLoad={(list) => onChangeOptions(list)} />
+                <GeneralMenu onOptionsLoad={(list) => onChangeOptions(list)} options={options} />
             </Group>
             <Divider variant="dotted" />
             <OptionList options={options} onChange={onChangeOptions} />

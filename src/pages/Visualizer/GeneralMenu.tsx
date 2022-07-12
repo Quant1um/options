@@ -6,10 +6,11 @@ import { Settings, Search, Photo, MessageCircle, ArrowsLeftRight } from 'tabler-
 import LoadModal from './LoadModal';
 
 interface Props {
-    onOptionsLoad: (arg: Option[]) => void
+    onOptionsLoad: (arg: Option[]) => void,
+    options: Option[]
 }
 
-export default ({ onOptionsLoad }: Props) => {
+export default ({ onOptionsLoad, options }: Props) => {
     const [presetOpened, setPresetOpened] = useState(false);
 
     useHotkeys([
@@ -19,7 +20,7 @@ export default ({ onOptionsLoad }: Props) => {
 
     return (
         <>
-            <LoadModal opened={presetOpened} onClose={() => setPresetOpened(false)} onLoad={(list) => { onOptionsLoad(list); setPresetOpened(false) }} />
+            <LoadModal opened={presetOpened} options={options} onClose={() => setPresetOpened(false)} onLoad={(list) => { onOptionsLoad(list); setPresetOpened(false) }} />
             <Menu size="md">
                 <Menu.Item icon={<ArrowsLeftRight size={14} />} rightSection={<Text size="xs" color="dimmed">⌘L</Text>} onClick={() => setPresetOpened(true)}>Save/Load</Menu.Item>
 

@@ -1,17 +1,19 @@
 import { Option } from "calc/option"
-import { Group, Modal } from "@mantine/core";
+import { Divider, Modal } from "@mantine/core";
 import { Container } from "./Presets/Preset";
 
 interface Props {
     opened: boolean,
+    options: Option[],
     onClose: () => void,
     onLoad: (arg: Option[]) => void
 }
 
-export default ({ opened, onClose, onLoad }: Props) => {
+export default ({ opened, options, onClose, onLoad }: Props) => {
     return (
-        <Modal opened={opened} onClose={onClose} title="Load Menu" size="40%" overflow="outside">
-            <Container onLoad={onLoad} />
+        <Modal opened={opened} onClose={onClose} title="Load/Save" size="40%" overflow="outside">
+            <Divider variant="dotted" />
+            <Container onLoad={onLoad} options={options} />
         </Modal>
     )
 }
