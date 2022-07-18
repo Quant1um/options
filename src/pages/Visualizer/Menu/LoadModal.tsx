@@ -11,7 +11,7 @@ interface Props {
 
 export default ({ opened, options, onClose, onLoad }: Props) => {
     return (
-        <Modal opened={opened} onClose={onClose} title="Load/Save" size="40%" overflow="outside">
+        <Modal opened={opened} onClose={onClose} title="Load/Save" size="lg" overflow="outside">
             <Divider variant="dotted" />
             <Container onLoad={onLoad} options={options} />
         </Modal>

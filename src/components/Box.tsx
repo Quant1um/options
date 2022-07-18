@@ -9,6 +9,7 @@ interface Props {
     center?: true | undefined,
     flex?: number | undefined,
     children: ReactNode,
+    style?: object | undefined,
     [k: string]: any
 }
 
@@ -24,7 +25,8 @@ export default (props: Props) => {
             alignItems: props.align,
             justifyContent: props.justify,
             flexDirection: props.row ? "row" : props.column ? "column" : undefined,
-            flex: props.fill ? 1 : props.flex
+            flex: props.fill ? 1 : props.flex,
+            ...(props.style || {})
         }}>
             {props.children}
         </div>

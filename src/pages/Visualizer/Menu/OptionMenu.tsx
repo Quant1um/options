@@ -10,7 +10,7 @@ interface Props {
 
 export default ({ options, onChangeOptions }: Props) => {
     return (
-        <Paper radius="md" style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <Paper radius="md" style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: "450px" }}>
             <Group m="md" position="apart">
                 <Title order={4}>Option Visualizer</Title>
                 <GeneralMenu onOptionsLoad={(list) => onChangeOptions(list)} options={options} />
